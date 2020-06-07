@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a-flask-app
+  labels:
+    app: a-flask-app
+spec:
+  selector:
+    matchLabels:
+      app: a-flask-app
+  template:
+    metadata:
+      labels:
+        app: a-flask-app
+    spec:
+      containers:
+      - name: a-flask-app
+        image: a-flask-app:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: uwsgi-socket
+            mountPath: /var/run/socket
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+          - name: uwsgi-socket
+            mountPath: /var/run/socket
+          - name: nginx-config-volume
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+        ports:
+        - containerPort: 80
+      volumes:
+        - name: uwsgi-socket
+          emptyDir: {}
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config

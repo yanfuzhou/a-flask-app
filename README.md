@@ -1,3 +1,7 @@
+Develop:
+```bash
+pip install -r requirements.txt
+```
 Build:
 ```bash
 docker build --rm -t a-flask-app .

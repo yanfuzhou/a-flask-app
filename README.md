@@ -11,3 +11,5 @@ Deploy:
 cd deployments
 kubectl kustomize | kubectl apply -f -
 ```
+Swagger:
+![](screenshot.png)

@@ -1,0 +1,19 @@
+{
+ "apiVersion": "v1",
+ "kind": "Service",
+ "metadata": {
+  "name": "REPOSITORY.IMAGE.DOCKER"
+ },
+ "spec": {
+  "selector": {
+   "app": "REPOSITORY.IMAGE.DOCKER"
+  },
+  "type": "NodePort",
+  "ports": [
+   {
+    "name": "http",
+    "port": 80
+   }
+  ]
+ }
+}

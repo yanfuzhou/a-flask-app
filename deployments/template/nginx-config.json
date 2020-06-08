@@ -1,0 +1,10 @@
+{
+ "apiVersion": "v1",
+ "kind": "ConfigMap",
+ "metadata": {
+  "name": "nginx-config"
+ },
+ "data": {
+  "nginx.conf": "user www-data;\nworker_processes auto;\npid /run/nginx.pid;\ninclude /etc/nginx/modules-enabled/*.conf;\n\nevents {\n    worker_connections 768;\n}\n\nhttp {\n    sendfile on;\n    tcp_nopush on;\n    tcp_nodelay on;\n    keepalive_timeout 65;\n    types_hash_max_size 2048;\n    include /etc/nginx/mime.types;\n    default_type application/octet-stream;\n    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;\n    ssl_prefer_server_ciphers on;\n\n    access_log /var/log/nginx/access.log;\n    error_log /var/log/nginx/error.log;\n\n    gzip on;\n\n    server {\n        listen       80;\n        server_name  localhost;\n        charset      utf-8;\n        client_max_body_size    2M;\n\n        location / {\n            include uwsgi_params;\n            uwsgi_pass  unix:/var/run/socket/uwsgi.sock;\n            uwsgi_read_timeout  120s;\n            uwsgi_send_timeout  120s;\n        }\n\n        location /static {\n            alias   /src/static;\n        }\n    }\n\n    include /etc/nginx/conf.d/*.conf;\n    include /etc/nginx/sites-enabled/*;\n}"
+ }
+}

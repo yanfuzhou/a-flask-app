@@ -1,0 +1,71 @@
+{
+ "apiVersion": "apps/v1",
+ "kind": "Deployment",
+ "metadata": {
+  "name": "REPOSITORY.IMAGE.DOCKER",
+  "labels": {
+   "app": "REPOSITORY.IMAGE.DOCKER"
+  }
+ },
+ "spec": {
+  "selector": {
+   "matchLabels": {
+    "app": "REPOSITORY.IMAGE.DOCKER"
+   }
+  },
+  "template": {
+   "metadata": {
+    "labels": {
+     "app": "REPOSITORY.IMAGE.DOCKER"
+    }
+   },
+   "spec": {
+    "containers": [
+     {
+      "name": "REPOSITORY.IMAGE.DOCKER",
+      "image": "REPOSITORY.IMAGE.DOCKER",
+      "imagePullPolicy": "IfNotPresent",
+      "volumeMounts": [
+       {
+        "name": "uwsgi-socket",
+        "mountPath": "/var/run/socket"
+       }
+      ]
+     },
+     {
+      "name": "nginx",
+      "image": "nginx:latest",
+      "volumeMounts": [
+       {
+        "name": "uwsgi-socket",
+        "mountPath": "/var/run/socket"
+       },
+       {
+        "name": "nginx-config-volume",
+        "mountPath": "/etc/nginx/nginx.conf",
+        "subPath": "nginx.conf"
+       }
+      ],
+      "ports": [
+       {
+        "containerPort": 80
+       }
+      ]
+     }
+    ],
+    "volumes": [
+     {
+      "name": "uwsgi-socket",
+      "emptyDir": {}
+     },
+     {
+      "name": "nginx-config-volume",
+      "configMap": {
+       "name": "nginx-config"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

@@ -135,6 +135,14 @@ In this example, we'll deploy a Flask API (Nginx + uwsgi + Flask) to Kubernetes
 ```bash
 git clone https://github.com/yanfuzhou/a-flask-app.git
 ```
+Run from local
+```bash
+pip install -r requirements.txt
+./uwsgi.sh
+```
+Then navigate to http://localhost:4000/api in your web browser
+
+![](https://github.com/yanfuzhou/a-flask-app/raw/master/screenshot.png)
 #### 4.2 Deploy to Kubernetes
 To deploy to Docker Kubernetes, execute following command:
 ```bash
@@ -200,5 +208,5 @@ kubectl get service a-flask-app
 NAME          TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 a-flask-app   NodePort   10.110.187.97   <none>        80:30793/TCP   12h
 ```
-Open `http://localhost:30793/api` in a web browser and you'll see its swagger doc
-![](https://github.com/yanfuzhou/a-flask-app/raw/master/screenshot.png)
+Open `http://localhost:30793/api` in a web browser and you'll see its swagger doc, and all done!
+

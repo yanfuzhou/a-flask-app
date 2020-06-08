@@ -3,12 +3,16 @@
 import os
 import yaml
 import json
-import shlex
 import subprocess
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 
 export_as_json = False
 template_folder = os.path.join(os.getcwd(), 'template')
+
+
+class NoAliasDumper(yaml.Dumper):
+    def ignore_aliases(self, data):
+        return True
 
 
 def write_yamls(p, data):
@@ -18,7 +22,7 @@ def write_yamls(p, data):
         if export_as_json:
             f.write(json.dumps(data, indent=1))
         else:
-            f.write(yaml.dump(data))
+            f.write(yaml.dump(data, Dumper=NoAliasDumper))
         f.close()
 
 
@@ -69,16 +73,15 @@ def generate_env_yaml(img_name, template=os.path.join(template_folder, 'env.json
     envs['metadata']['labels']['app'] = img_name
     envs['spec']['template']['spec']['containers'][0]['name'] = img_name
     variables = list()
-    var = {'name': None, 'value': None}
-    command = shlex.split("env -i bash -c 'source {}'".format(app_conf))
-    p = subprocess.Popen(command, stdout=subprocess.PIPE)
+    p = subprocess.Popen(['sh', app_conf], stdout=subprocess.PIPE)
     output = p.communicate()
     for line in output:
         if line is not None:
-            key, value = line.decode('utf-8').replace('\n', '').split('=')
-            var['name'] = key
-            var['value'] = value
-            variables.append(var)
+            string_env = line.decode('utf-8').split('\n')[0: -1]
+            for kv in string_env:
+                if '=' in kv:
+                    key, value = kv.split('=')
+                    variables.append({'name': key, 'value': value})
     envs['spec']['template']['spec']['containers'][0]['env'] = variables
     write_yamls(env_yaml, envs)
     return env_yaml

@@ -10,8 +10,8 @@ https://docs.docker.com/docker-for-mac/install/
 *Note: if you already have Kubernetes installed, or your Kubernetes are configured not by Docker, you may need to back up your Kubernetes config file (`~/.kube/config`) before proceed this tutorial. After you walk through this tutorial, you can always merge the content of your backups to the Docker generated Kubernetes config file in a text editor. 
 
 https://docs.docker.com/docker-for-mac/#preferences
-https://docs.docker.com/docker-for-mac/#kubernetes
-![](https://docs.docker.com/docker-for-mac/images/whale-in-menu-bar.png)
+https://docs.docker.com/docker-for-mac/#kubernetes  
+![](https://docs.docker.com/docker-for-mac/images/whale-in-menu-bar.png)  
 ![](https://docs.docker.com/docker-for-mac/images/menu/prefs.png)
 ![](https://docs.docker.com/docker-for-mac/images/kubernetes/kube.png)
 
@@ -56,7 +56,7 @@ Now you can start or stop Dashboard by `./kube-dashboard.sh start`.
 ```
 Usage: ./kube-dashboard.sh {start|stop|restart}
 ```
-Open Dashboard link in a browser.
+Open Dashboard link in a browser.  
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
 #### 2.3 Dashboard login

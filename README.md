@@ -9,8 +9,9 @@ https://docs.docker.com/docker-for-mac/install/
 
 *Note: if you already have Kubernetes installed, or your Kubernetes are configured not by Docker, you may need to back up your Kubernetes config file (`~/.kube/config`) before proceed this tutorial. After you walk through this tutorial, you can always merge the content of your backups to the Docker generated Kubernetes config file in a text editor. 
 
-https://docs.docker.com/docker-for-mac/#preferences
+https://docs.docker.com/docker-for-mac/#preferences  
 https://docs.docker.com/docker-for-mac/#kubernetes  
+
 ![](https://docs.docker.com/docker-for-mac/images/whale-in-menu-bar.png)  
 ![](https://docs.docker.com/docker-for-mac/images/menu/prefs.png)
 ![](https://docs.docker.com/docker-for-mac/images/kubernetes/kube.png)

@@ -209,5 +209,5 @@ kubectl get service a-flask-app
 NAME          TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 a-flask-app   NodePort   10.110.187.97   <none>        80:30793/TCP   12h
 ```
-Open `http://localhost:30793/api` in a web browser and you'll see its swagger doc, and all done!
+Open `http://localhost:30793/api` in a web browser and you'll see its swagger doc, and **all done!**
 

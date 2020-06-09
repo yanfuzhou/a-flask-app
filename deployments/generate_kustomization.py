@@ -66,23 +66,6 @@ def generate_service(img_name, template=os.path.join(template_folder, 'service.j
     return service_yaml
 
 
-def generate_ingress(img_name, template=os.path.join(template_folder, 'ingress.json'),
-                     ingress_yaml='ingress.yaml'):
-    ingress = load_template(template)
-    ingress['metadata']['name'] = img_name
-    ingress['spec']['rules'][0]['http']['paths'][0]['backend']['serviceName'] = img_name
-    write_yamls(ingress_yaml, ingress)
-    return ingress_yaml
-
-
-def generate_hpa(img_name, template=os.path.join(template_folder, 'hpa.json'), hpa_yaml='hpa.yaml'):
-    hpa = load_template(template)
-    hpa['metadata']['name'] = img_name
-    hpa['spec']['scaleTargetRef']['name'] = img_name
-    write_yamls(hpa_yaml, hpa)
-    return hpa_yaml
-
-
 def generate_env_yaml(img_name, template=os.path.join(template_folder, 'env.json'),
                       env_yaml='env.yaml', app_conf=os.path.join(os.path.dirname(os.getcwd()), 'app.conf')):
     envs = load_template(template)
@@ -104,12 +87,12 @@ def generate_env_yaml(img_name, template=os.path.join(template_folder, 'env.json
     return env_yaml
 
 
-def generate_kustomization(deployments_yaml, nginx_config_yaml, service_yaml, ingress_yaml, hpa_yaml, env_yaml,
+def generate_kustomization(deployments_yaml, nginx_config_yaml, service_yaml, env_yaml,
                            template=os.path.join(template_folder, 'kustomization.json'),
                            name_space='default', kustomization_yaml='kustomization.yaml'):
     kustomization = load_template(template)
     kustomization['namespace'] = name_space
-    kustomization['resources'] = [deployments_yaml, nginx_config_yaml, service_yaml, ingress_yaml, hpa_yaml]
+    kustomization['resources'] = [deployments_yaml, nginx_config_yaml, service_yaml]
     kustomization['patchesStrategicMerge'] = [env_yaml]
     write_yamls(kustomization_yaml, kustomization)
 
@@ -122,15 +105,12 @@ def main():
     deployments_yaml = generate_deployments(img_name, tag=tag)
     nginx_config_yaml = generate_nginx_conf()
     service_yaml = generate_service(img_name)
-    ingress_yaml = generate_ingress(img_name)
-    hpa_yaml = generate_hpa(img_name)
     app_conf = args.app_conf
     if app_conf is None:
         env_yaml = generate_env_yaml(img_name)
     else:
         env_yaml = generate_env_yaml(img_name, app_conf=app_conf)
-    generate_kustomization(deployments_yaml, nginx_config_yaml, service_yaml, ingress_yaml, hpa_yaml, env_yaml,
-                           name_space='default')
+    generate_kustomization(deployments_yaml, nginx_config_yaml, service_yaml, env_yaml, name_space='default')
 
 
 def is_valid_file(parser, arg):

@@ -8,7 +8,7 @@
   "selector": {
    "app": "REPOSITORY.IMAGE.DOCKER"
   },
-  "type": "NodePort",
+  "type": "ClusterIP",
   "ports": [
    {
     "name": "http",

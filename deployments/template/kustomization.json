@@ -5,7 +5,9 @@
  "resources": [
   "deployments.yaml",
   "nginx-config.yaml",
-  "service.yaml"
+  "service.yaml",
+  "ingress.yaml",
+  "hpa.yaml"
  ],
  "patchesStrategicMerge": [
   "env.yaml"

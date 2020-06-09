@@ -40,6 +40,8 @@ else
   then
     kubectl delete services ${DOCKER_IMAGE}
     kubectl delete deployment ${DOCKER_IMAGE}
+    kubectl delete ingress ${DOCKER_IMAGE}
+    kubectl delete hpa ${DOCKER_IMAGE}
     rm -f ${DOCKER_IMAGE}.tar
     echo "--- Start building to docker image... ---"
     docker build --rm -t ${DOCKER_IMAGE} .

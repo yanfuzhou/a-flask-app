@@ -1,7 +1,7 @@
 FROM python:3.8-slim
 
 RUN apt-get update && \
-    apt-get -y install gcc g++ uwsgi-plugin-python && \
+    apt-get -y install gcc g++ uwsgi-plugin-python3 && \
     apt-get -y upgrade && \
     pip install --upgrade pip && \
     apt-get autoclean && \
